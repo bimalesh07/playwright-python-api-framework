@@ -3,6 +3,8 @@ from playwright.sync_api import Playwright
 from utilities.read_env import ReadEnv
 from utilities.Custom_logger import LogGen
 from api_endpoints.Auth_Client import UserAuthClient
+from api_endpoints.Auth_Login import Auth_login_users
+import random
 
 logger = LogGen.loggen()
 
@@ -32,10 +34,48 @@ def api_context(playwright: Playwright):
 @pytest.fixture(scope="function")
 def user_auth_client(api_context):
   
-    logger.info("Instantiating isolated User Authorization endpoint model client...")
+    logger.info("User Authorization endpoint model client...")
 
     client = UserAuthClient(api_context)
 
     yield client
-    
     logger.info("Tearing down function instance container successfully.")
+
+
+@pytest.fixture(scope="function")
+def user_login_client(api_context):
+    logger.info("*********User Login endpoint*****************")
+
+    login_clinet = Auth_login_users(api_context)
+    yield login_clinet
+
+    logger.info("Tearing down functions")
+
+
+@pytest.fixture(scope="session")
+def user_access_token(api_context):
+    auth_client = Auth_login_users(api_context)
+    
+    unique_email = f"session.auth.{random.randint(1000, 9999)}@yadav.com"
+    password = "GlobalSecurePassword123"
+    user_payload = {
+        "name": "Session Secure User",
+        "email": unique_email,
+        "password": password,
+        "avatar": "https://picsum.photos/640/480"
+    }
+    
+    
+    create_res = api_context.post("/api/v1/users/", data=user_payload)
+    assert create_res.status == 201
+    user_id = create_res.json()["id"]
+    
+    login_payload = {"email": unique_email, "password": password}
+    login_res = auth_client.login_user(login_payload)
+    assert login_res.status in [200, 201]
+    
+    token = login_res.json()["access_token"]
+    
+    yield token
+
+    api_context.delete(f"/api/v1/users/{user_id}")
