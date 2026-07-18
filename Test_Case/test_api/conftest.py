@@ -4,6 +4,7 @@ from utilities.read_env import ReadEnv
 from utilities.Custom_logger import LogGen
 from api_endpoints.Auth_Client import UserAuthClient
 from api_endpoints.Auth_Login import Auth_login_users
+from api_endpoints.Categroy_Client import CategoryClient
 import random
 
 logger = LogGen.loggen()
@@ -51,11 +52,17 @@ def user_login_client(api_context):
 
     logger.info("Tearing down functions")
 
+@pytest.fixture(scope="function")
+def categories_client(api_context):
+    logger.info("**********Categories Validations *********")
+    categories_product = CategoryClient(api_context)
+    yield categories_product
+    logger.info("Tearing down")
+
 
 @pytest.fixture(scope="session")
 def user_access_token(api_context):
     auth_client = Auth_login_users(api_context)
-    
     unique_email = f"session.auth.{random.randint(1000, 9999)}@yadav.com"
     password = "GlobalSecurePassword123"
     user_payload = {
