@@ -6,7 +6,7 @@ from api_endpoints.Auth_Client import UserAuthClient
 from api_endpoints.Auth_Login import Auth_login_users
 from api_endpoints.Categroy_Client import CategoryClient
 import random
-
+from api_endpoints.Product_api import ProductClient
 logger = LogGen.loggen()
 
 @pytest.fixture(scope="session")
@@ -59,6 +59,9 @@ def categories_client(api_context):
     yield categories_product
     logger.info("Tearing down")
 
+@pytest.fixture(scope="function")
+def product_client(api_context):
+    return ProductClient(api_context)
 
 @pytest.fixture(scope="session")
 def user_access_token(api_context):
