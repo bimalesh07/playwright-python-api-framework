@@ -1,4 +1,3 @@
-# 📂 Test_Case/test_api/test_Product.py
 import pytest
 import random
 from utilities.Custom_logger import LogGen
