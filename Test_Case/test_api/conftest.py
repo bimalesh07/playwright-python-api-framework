@@ -61,7 +61,9 @@ def categories_client(api_context):
 
 @pytest.fixture(scope="function")
 def product_client(api_context):
-    return ProductClient(api_context)
+    Prodcut_item = ProductClient(api_context)
+    yield Prodcut_item
+    logger.info("*********Prodcut Tearing Down ***********")
 
 @pytest.fixture(scope="session")
 def user_access_token(api_context):
