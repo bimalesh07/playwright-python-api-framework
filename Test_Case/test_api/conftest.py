@@ -4,7 +4,7 @@ from utilities.read_env import ReadEnv
 from utilities.Custom_logger import LogGen
 from api_endpoints.Auth_Client import UserAuthClient
 from api_endpoints.Auth_Login import Auth_login_users
-from api_endpoints.Categroy_Client import CategoryClient
+from api_endpoints.Category import CategoryClient
 import random
 from api_endpoints.Product_api import ProductClient
 logger = LogGen.loggen()
@@ -64,6 +64,13 @@ def product_client(api_context):
     Prodcut_item = ProductClient(api_context)
     yield Prodcut_item
     logger.info("*********Prodcut Tearing Down ***********")
+
+
+@pytest.fixture(scope="function")
+def locations_client(api_context):
+    from api_endpoints.Locations_api import LocationsClient
+    return LocationsClient(api_context)
+
 
 @pytest.fixture(scope="session")
 def user_access_token(api_context):
