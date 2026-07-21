@@ -1,0 +1,26 @@
+[
+  {
+    "scenario": "Valid Dynamic User Login",
+    "email": "__DYNAMIC_USER__",
+    "password": "__DYNAMIC_PASSWORD__",
+    "expected_status": 201
+  },
+  {
+    "scenario": "Invalid Password",
+    "email": "__DYNAMIC_USER__",
+    "password": "WrongPassword123",
+    "expected_status": 401
+  },
+  {
+    "scenario": "Unregistered Email",
+    "email": "not_registered_user_99999@mail.com",
+    "password": "ValidPassword123",
+    "expected_status": 401
+  },
+  {
+    "scenario": "Empty Password",
+    "email": "test@mail.com",
+    "password": "",
+    "expected_status": 401
+  }
+]

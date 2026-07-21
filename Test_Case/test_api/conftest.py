@@ -4,7 +4,7 @@ from utilities.read_env import ReadEnv
 from utilities.Custom_logger import LogGen
 from api_endpoints.Auth_Client import UserAuthClient
 from api_endpoints.Auth_Login import Auth_login_users
-from api_endpoints.Category import CategoryClient
+from Test_Case.test_api.Category import CategoryClient
 import random
 from api_endpoints.Product_api import ProductClient
 logger = LogGen.loggen()
