@@ -89,10 +89,22 @@ pipeline {
                 }
             }
         }
+
+        // 
+        stage('Run JMeter Performance Tests') {
+            steps {
+                echo "tarting JMeter Performance Tests..."
+                bat '''
+                    if not exist "reports\\jmeter_html_report" mkdir reports\\jmeter_html_report
+                    jmeter -n -t performance_tests/Platzi_Load_Test.jmx -l reports/jmeter_results.jtl -e -o reports/jmeter_html_report -f
+                '''
+            }
+        }
     }
 
     post {
         always {
+            //Playwright/Pytest HTML Report
             publishHTML(target: [
                 allowMissing: false,
                 alwaysLinkToLastBuild: true,
@@ -101,6 +113,17 @@ pipeline {
                 reportFiles: 'automation_report.html',
                 reportName: 'Playwright Automation Report',
                 reportTitles: 'Test Results'
+            ])
+
+            // JMeter Performance Dashboard HTML Report
+            publishHTML(target: [
+                allowMissing: true,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'reports/jmeter_html_report',
+                reportFiles: 'index.html',
+                reportName: 'JMeter Performance Report',
+                reportTitles: 'Performance Metrics'
             ])
         }
     }
