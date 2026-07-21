@@ -34,9 +34,10 @@ class TestAuthLoginDDT:
 
     @pytest.mark.parametrize("data", load_login_json())
     def test_login_ddt(self, user_login_client, created_user, data):
+        self.logger.info("****************login DDT are start ************")
         scenario = data["scenario"]
         expected_status = data["expected_status"]
-        
+
         payload = {
             "email": data["email"],
             "password": data["password"]
