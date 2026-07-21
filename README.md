@@ -81,7 +81,7 @@ playwright install
 
 ---
 
-## 🚀 Test Execution
+## Test Execution
 
 ### 1. Running API Automation Suite (Pytest + Playwright)
 
@@ -105,7 +105,7 @@ jmeter -n -t performance_tests/Platzi_Load_Test.jmx -l reports/jmeter_results.jt
 
 ---
 
-## 🔄 CI/CD Jenkins Pipeline
+##  CI/CD Jenkins Pipeline
 
 The project includes a parameterised `Jenkinsfile` supporting both manual parameter selection and automatic GitHub push triggers:
 
@@ -115,7 +115,7 @@ The project includes a parameterised `Jenkinsfile` supporting both manual parame
 
 ---
 
-## 📊 Sample Reports
+## Sample Reports
 
 - **Pytest HTML Report**: Available at `reports/automation_report.html`
 - **JMeter Performance Dashboard**: Open `reports/jmeter_html_report/index.html` in any browser to view:
@@ -125,6 +125,6 @@ The project includes a parameterised `Jenkinsfile` supporting both manual parame
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 - **Bimalesh Kumar** - [GitHub Profile](https://github.com/bimalesh07)
